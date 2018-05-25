@@ -8,6 +8,14 @@ public class UsuarioModel extends PessoaModel {
 	private String senha;
 	private Long id;
 	
+	public UsuarioModel () {
+	}
+	
+	public UsuarioModel (String login, String senha) {
+		this.login = login;
+		this.senha = senha;
+	}
+	
 	public String getLogin() {
 		return login;
 	}
