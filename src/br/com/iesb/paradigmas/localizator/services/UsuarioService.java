@@ -12,7 +12,10 @@ public class UsuarioService extends UtilService{
 	private UsuarioDao dao;
 	
 	public RetornoModel logar(UsuarioModel usuario){
-		return null;
+		RetornoModel retornoModel = new RetornoModel();
+		retornoModel.setMensagem("Usuário Logado!!");
+		retornoModel.setSucesso(Boolean.TRUE);
+		return retornoModel;
 	}
 
 	public Integer create(UsuarioModel usuario) {
@@ -33,7 +36,7 @@ public class UsuarioService extends UtilService{
 
 	public RetornoModel find(Object value) {
 		RetornoModel retorno = new RetornoModel();
-		List<Object> usuarios;
+		//List<Object> usuarios;
 		if(isNumero(value.toString())){
 			try {
 				getDao().findById(new Long(value.toString()));
