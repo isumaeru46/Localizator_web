@@ -50,6 +50,19 @@ public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 		}
 		return retorno;
 	}
+	
+	public UsuarioModel findByLogin(String login) throws SQLException {
+		UsuarioModel retorno = new UsuarioModel();
+		Connection conn = getConnection();
+		StringBuilder query = new StringBuilder();
+		query.append(SELECT);
+		query.append("WHERE LOGIN = '" + login + "' ");
+		ResultSet rs = select(query.toString(), conn);
+		if (rs.next()){
+			retorno = criaUsuario(rs);
+		}
+		return retorno;
+	}
 
 	private UsuarioModel criaUsuario(ResultSet rs) throws SQLException {
 		UsuarioModel usuario = new UsuarioModel();

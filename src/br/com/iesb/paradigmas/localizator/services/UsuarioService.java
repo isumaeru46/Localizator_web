@@ -1,39 +1,37 @@
 package br.com.iesb.paradigmas.localizator.services;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 import br.com.iesb.paradigmas.localizator.daos.UsuarioDao;
+import br.com.iesb.paradigmas.localizator.interfaces.ServiceInterface;
 import br.com.iesb.paradigmas.localizator.models.RetornoModel;
 import br.com.iesb.paradigmas.localizator.models.UsuarioModel;
 
-public class UsuarioService extends UtilService{
+public class UsuarioService extends UtilService implements ServiceInterface{
 	
 	private UsuarioDao dao;
 	
-	public RetornoModel logar(UsuarioModel usuario){
-		RetornoModel retornoModel = new RetornoModel();
-		retornoModel.setMensagem("Usuário Logado!!");
-		retornoModel.setSucesso(Boolean.TRUE);
-		return retornoModel;
-	}
-
-	public Integer create(UsuarioModel usuario) {
+	@Override
+	public RetornoModel create(UsuarioModel usuario) {
 		
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public Integer update(Long id, UsuarioModel usuario) {
+	
+	@Override
+	public RetornoModel update(Long id, UsuarioModel usuario) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Integer delete(Long id) {
+	@Override
+	public RetornoModel delete(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public RetornoModel find(Object value) {
 		RetornoModel retorno = new RetornoModel();
 		//List<Object> usuarios;
@@ -50,7 +48,42 @@ public class UsuarioService extends UtilService{
 		return retorno;
 	}
 	
-	public UsuarioDao getDao() {
+	public RetornoModel logar(UsuarioModel usuarioRequest){
+		UsuarioModel usuarioModel = null;
+		RetornoModel retornoModel = new RetornoModel();
+		try {
+			usuarioModel = getDao().findByLogin(usuarioRequest.getLogin());
+		} catch (SQLException e) {
+			retornoModel.setMensagem("Ocorreu um erro inesperado!");
+			retornoModel.setSucesso(Boolean.FALSE);
+			e.printStackTrace();
+		}
+		if(usuarioModel != null) {
+			if(usuarioModel.getSenha().equals(usuarioRequest.getSenha())) {
+				retornoModel.setMensagem("Logado com sucesso!");
+				retornoModel.setSucesso(Boolean.TRUE);
+				ArrayList<UsuarioModel> retornoUsuario = new ArrayList<>();
+				retornoUsuario.add(usuarioModel);
+				retornoModel.setConteudo(retornoUsuario);
+			}else {
+				retornarUsuarioOuSenhaInvalida(retornoModel);
+			}
+		}else {
+			retornarUsuarioOuSenhaInvalida(retornoModel);
+		}
+		return retornoModel;
+	}
+
+	private void retornarUsuarioOuSenhaInvalida(RetornoModel retornoModel) {
+		retornoModel.setMensagem("Usuário ou senha inválidos!");
+		retornoModel.setSucesso(Boolean.FALSE);
+	}
+
+	
+	private UsuarioDao getDao() {
+		if (dao == null) {
+			dao = new UsuarioDao();
+		}
 		return dao;
 	}
 
