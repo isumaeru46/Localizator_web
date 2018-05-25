@@ -8,6 +8,7 @@ import java.util.List;
 
 import br.com.iesb.paradigmas.localizator.interfaces.UsuarioDaoInterface;
 import br.com.iesb.paradigmas.localizator.models.UsuarioModel;
+import br.com.iesb.paradigmas.localizator.singletons.SingletonDao;
 
 public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 	

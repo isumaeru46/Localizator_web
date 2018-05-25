@@ -1,4 +1,4 @@
-package br.com.iesb.paradigmas.localizator.daos;
+package br.com.iesb.paradigmas.localizator.singletons;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
