@@ -1,5 +1,6 @@
 package br.com.iesb.paradigmas.localizator.controllers;
 
+
 import br.com.iesb.paradigmas.localizator.models.RetornoModel;
 import br.com.iesb.paradigmas.localizator.models.UsuarioModel;
 import br.com.iesb.paradigmas.localizator.services.UsuarioService;
