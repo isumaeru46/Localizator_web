@@ -1,6 +1,7 @@
 package br.com.iesb.paradigmas.localizator.daos;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,28 +40,32 @@ public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 
 	@Override
 	public List<UsuarioModel> findByName(String name) throws SQLException {
+		PreparedStatement stmt = null;
 		List<UsuarioModel> retorno = new ArrayList<>();
 		Connection conn = getConnection();
 		StringBuilder query = new StringBuilder();
 		query.append(SELECT);
 		query.append("WHERE NOME = '" + name + "' ");
-		ResultSet rs = select(query.toString(), conn);
+		ResultSet rs = select(query.toString(), conn, stmt);
 		while (rs.next()){
 			retorno.add(criaUsuario(rs));
 		}
+		fechaConexao(conn, stmt, rs);
 		return retorno;
 	}
 	
 	public UsuarioModel findByLogin(String login) throws SQLException {
+		PreparedStatement stmt = null;
 		UsuarioModel retorno = new UsuarioModel();
 		Connection conn = getConnection();
 		StringBuilder query = new StringBuilder();
 		query.append(SELECT);
 		query.append("WHERE LOGIN = '" + login + "' ");
-		ResultSet rs = select(query.toString(), conn);
+		ResultSet rs = select(query.toString(), conn, stmt);
 		if (rs.next()){
 			retorno = criaUsuario(rs);
 		}
+		fechaConexao(conn, stmt, rs);
 		return retorno;
 	}
 
@@ -73,28 +78,32 @@ public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 
 	@Override
 	public UsuarioModel findById(Long id) throws SQLException {
+		PreparedStatement stmt = null;
 		UsuarioModel retorno = new UsuarioModel();
 		Connection conn = getConnection();
 		StringBuilder query = new StringBuilder();
 		query.append(SELECT);
-		query.append("WHERE ID = "+id);
-		ResultSet rs = select(query.toString(), conn);
+		query.append(" WHERE ID = "+id);
+		ResultSet rs = select(query.toString(), conn, stmt);
 		if (rs.next()){
 			retorno = criaUsuario(rs);
 		}
+		fechaConexao(conn, stmt, rs);
 		return retorno;
 	}
 
 	@Override
 	public List<UsuarioModel> findAll() throws SQLException {
+		PreparedStatement stmt = null;
 		List<UsuarioModel> retorno = new ArrayList<>();
 		Connection conn = getConnection();
 		StringBuilder query = new StringBuilder();
 		query.append(SELECT);
-		ResultSet rs = select(query.toString(), conn);
+		ResultSet rs = select(query.toString(), conn, stmt);
 		while (rs.next()){
 			retorno.add(criaUsuario(rs));
 		}
+		fechaConexao(conn, stmt, rs);
 		return retorno;
 	}
 

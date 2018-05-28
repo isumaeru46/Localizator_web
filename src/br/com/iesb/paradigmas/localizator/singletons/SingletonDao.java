@@ -66,10 +66,10 @@ public class SingletonDao {
 		return retorno;
 	}
 	
-	protected ResultSet select (String sql, Connection con) throws SQLException{
-	    PreparedStatement stmt = con.prepareStatement(sql);
+	protected ResultSet select (String sql, Connection con,PreparedStatement stmt) throws SQLException{
+		System.out.println(sql);
+	    stmt = con.prepareStatement(sql);
 	    ResultSet rs = stmt.executeQuery();
-	    stmt.close();
 		return rs;
 	}
 	
@@ -78,9 +78,15 @@ public class SingletonDao {
 	}
 	
 	protected void fechaConexao(Connection con,PreparedStatement stmt, ResultSet rs) throws SQLException{
-		rs.close();
-	    stmt.close();
-	    con.close();
+		if(rs != null){
+			rs.close();
+		}
+		if(stmt != null){
+			stmt.close();
+		}
+		if(con != null){
+			con.close();
+		}
 	}
 
 }
