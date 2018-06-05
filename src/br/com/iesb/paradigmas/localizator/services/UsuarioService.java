@@ -2,6 +2,7 @@ package br.com.iesb.paradigmas.localizator.services;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.iesb.paradigmas.localizator.daos.UsuarioDao;
 import br.com.iesb.paradigmas.localizator.interfaces.ServiceInterface;
@@ -73,6 +74,23 @@ public class UsuarioService extends UtilService implements ServiceInterface{
 		}
 		return retornoModel;
 	}
+	
+	public RetornoModel retornarTodosUsuarios() {
+		RetornoModel retornoModel = new RetornoModel();
+		retornoModel.setMensagem("Lista de Usuários");
+		retornoModel.setSucesso(Boolean.TRUE);
+		List<UsuarioModel> usuarios = null;
+		try {
+			usuarios = getDao().findAll();
+		} catch (SQLException e) {
+			retornoModel.setMensagem("Ocorreu um erro inesperado!");
+			retornoModel.setSucesso(Boolean.FALSE);
+			e.printStackTrace();
+		}
+		retornoModel.setConteudo(usuarios);
+		
+		return retornoModel;
+	}
 
 	private void retornarUsuarioOuSenhaInvalida(RetornoModel retornoModel) {
 		retornoModel.setMensagem("Usuário ou senha inválidos!");
@@ -86,5 +104,7 @@ public class UsuarioService extends UtilService implements ServiceInterface{
 		}
 		return dao;
 	}
+
+	
 
 }

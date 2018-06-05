@@ -38,6 +38,11 @@ public class UsuarioController {
 		return null;
 	}
 	
+	@RequestMapping(value="/retornarTodosUsuarios", method = RequestMethod.GET)
+	public @ResponseBody RetornoModel retornarTodosUsuarios(){
+		return getUsuarioService().retornarTodosUsuarios();
+	}
+	
 	public UsuarioService getUsuarioService() {
 		if (usuarioService == null) {
 			usuarioService = new UsuarioService();

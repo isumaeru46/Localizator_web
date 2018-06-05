@@ -17,7 +17,7 @@ public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 
 	@Override
 	public Integer create(String query) {
-		String sql = "INSERT INTO curso (id, name) VALUES (" + query + ", " + query + ") ";
+		String sql = "INSERT INTO USUARIOS (id, name) VALUES (" + query + ", " + query + ") ";
 		try {
 			insert(sql);
 		} catch (SQLException e) {
@@ -45,7 +45,7 @@ public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 		Connection conn = getConnection();
 		StringBuilder query = new StringBuilder();
 		query.append(SELECT);
-		query.append("WHERE NOME = '" + name + "' ");
+		query.append(" WHERE NOME = '" + name + "' ");
 		ResultSet rs = select(query.toString(), conn, stmt);
 		while (rs.next()){
 			retorno.add(criaUsuario(rs));
@@ -60,7 +60,7 @@ public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 		Connection conn = getConnection();
 		StringBuilder query = new StringBuilder();
 		query.append(SELECT);
-		query.append("WHERE LOGIN = '" + login + "' ");
+		query.append(" WHERE LOGIN = '" + login + "' ");
 		ResultSet rs = select(query.toString(), conn, stmt);
 		if (rs.next()){
 			retorno = criaUsuario(rs);
@@ -71,7 +71,10 @@ public class UsuarioDao extends SingletonDao  implements UsuarioDaoInterface{
 
 	private UsuarioModel criaUsuario(ResultSet rs) throws SQLException {
 		UsuarioModel usuario = new UsuarioModel();
+		usuario.setId(rs.getLong("ID"));
 		usuario.setNome(rs.getString("NOME"));
+		usuario.setLogin(rs.getString("LOGIN"));
+		usuario.setSenha(rs.getString("SENHA"));
 		//TODO - ISMAEL - TERMINAR DE COMPOR
 		return usuario;
 	}

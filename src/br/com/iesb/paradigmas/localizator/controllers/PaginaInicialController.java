@@ -17,8 +17,7 @@ public class PaginaInicialController {
 	@RequestMapping("/welcome")
 	public ModelAndView helloWorld() {
 		new UsuarioService().find(new Long(0));
-		String message = "<br><div style='text-align:center;'>"
-				+ "<h3>********** Hello World, Spring MVC Tutorial</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
+		String message = "<br><div style='text-align:center;'><h3>********** Fui ao Banco e voltei **********</div><br><br>";
 		return new ModelAndView("welcome", "message", message);
 	}
 
